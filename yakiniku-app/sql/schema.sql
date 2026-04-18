@@ -16,6 +16,7 @@ CREATE TABLE group_menu_items (
     group_id INT,
     menu_name VARCHAR(100) NOT NULL,
     price INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (group_id) REFERENCES yakiniku_groups(id)
 );
 
@@ -24,5 +25,6 @@ CREATE TABLE shop_menu_items (
     shop_id INT,
     menu_name VARCHAR(100) NOT NULL,
     price INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (shop_id) REFERENCES shops(id)
 );
