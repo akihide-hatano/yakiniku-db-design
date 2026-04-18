@@ -12,5 +12,7 @@ public class Main {
 
         // ② データ取得確認
         repo.findAllShops();
+
+        repo.findShopByName("新宿");
     }
 }
