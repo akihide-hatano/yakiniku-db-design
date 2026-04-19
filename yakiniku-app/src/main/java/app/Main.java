@@ -17,6 +17,11 @@ public class Main {
 
         repo.findShopById(4);
 
-        repo.insertShop(1, "Yakiniku Tokyo 上野店", "東京都台東区");
+        //店舗名更新
+        repo.updateShopName(4, "新宿焼肉の名店");
+
+        //店舗住所更新
+        repo.updateShopAddress(4, "東京都新宿区新宿1-1-1");
+
     }
 }
