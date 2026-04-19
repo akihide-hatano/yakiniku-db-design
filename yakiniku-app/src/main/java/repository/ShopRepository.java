@@ -101,7 +101,29 @@ public class ShopRepository {
             System.out.println("検索失敗" + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    //店舗を追加するメソッド
+    public void insertShop(int groupId,String shopName,String address){
+        String sql = "INSERT INTO shops (group_id, shop_name, address) VALUES (?, ?, ?)";
+
+        try (
+            Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setInt(1, groupId);
+            stmt.setString(2, shopName);
+            stmt.setString(3, address);
+
+            int count = stmt.executeUpdate();
 
 
+            System.out.println("===== 店舗登録 =====");
+            System.out.println(count + "件登録しました。");
+
+        } catch (Exception e) {
+            System.err.println("登録失敗" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

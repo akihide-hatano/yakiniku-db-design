@@ -16,5 +16,7 @@ public class Main {
         repo.findShopByName("新宿");
 
         repo.findShopById(4);
+
+        repo.insertShop(1, "Yakiniku Tokyo 上野店", "東京都台東区");
     }
 }
