@@ -111,19 +111,49 @@ public class ShopRepository {
             Connection conn = DBUtil.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
         ) {
+            // 重複登録を防ぐためのチェック
+            if (isShopNameExists(shopName, groupId)){
+                System.out.println("同じグループ内に同名の店舗が既に存在します。登録をスキップします。");
+                return;
+            }
+            // パラメータの設定
             stmt.setInt(1, groupId);
             stmt.setString(2, shopName);
             stmt.setString(3, address);
 
+            // SQLの実行
             int count = stmt.executeUpdate();
 
-
+            // 結果の表示
             System.out.println("===== 店舗登録 =====");
             System.out.println(count + "件登録しました。");
 
         } catch (Exception e) {
+            // エラー処理
             System.err.println("登録失敗" + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    //重複登録を防ぐためのメソッド
+    public boolean isShopNameExists(String shopName, int groupId){
+        String sql = "SELECT COUNT(*) FROM shops WHERE group_id = ? AND shop_name = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, groupId);
+            stmt.setString(2, shopName);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("検索失敗: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
     }
 }
