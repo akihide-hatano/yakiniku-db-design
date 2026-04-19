@@ -14,5 +14,7 @@ public class Main {
         repo.findAllShops();
 
         repo.findShopByName("新宿");
+
+        repo.findShopById(4);
     }
 }
