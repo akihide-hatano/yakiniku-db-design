@@ -156,4 +156,45 @@ public class ShopRepository {
         }
         return false;
     }
+
+    //店舗名だけを更新するメソッド
+    public void updateShopName(int shopId,String newShopName){
+        // 店舗名の重複を防ぐためのチェック
+        if (isShopNameExists(newShopName, shopId)){
+            System.out.println("同じグループ内に同名の店舗が既に存在します。更新をスキップします。");
+            return;
+        }
+        String sql = "UPDATE shops SET shop_name = ? WHERE id = ?";
+
+        try(
+            Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ){
+            stmt.setString(1, newShopName);
+            stmt.setInt(2, shopId);
+            int count = stmt.executeUpdate();
+            System.out.println(count + "件更新しました。");
+        } catch (Exception e) {
+            System.out.println("更新失敗: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+    
+    //店舗の住所だけを更新するメソッド
+    public void updateShopAddress(int shopId, String newAddress){
+        String sql = "UPDATE shops SET address = ? WHERE id = ?";
+        try(
+            Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ){
+            stmt.setString(1, newAddress);
+            stmt.setInt(2, shopId);
+            int count = stmt.executeUpdate();
+            System.out.println(count + "件更新しました。");
+        } catch (Exception e) {
+            System.out.println("更新失敗: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
