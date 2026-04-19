@@ -73,4 +73,35 @@ public class ShopRepository {
             e.printStackTrace();
         }
     }
+
+    //店舗ID検索
+    public void findShopById(int shopId){
+        String sql = "SELECT id, shop_name, address FROM shops WHERE id = ?";
+
+        try (
+            Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setInt(1, shopId);
+
+            try(ResultSet rs = stmt.executeQuery()){
+                System.out.println("====== 店舗名検索 ========");
+
+                if(rs.next()){
+                    int id = rs.getInt("id");
+                    String name = rs.getString("shop_name");
+                    String address = rs.getString("address");
+
+                    System.out.println( id + " : " + name + "/" + address);
+                }else{
+                    System.out.println("該当する店舗がありませんでした");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("検索失敗" + e.getMessage());
+            e.printStackTrace();
+        }
+
+
+    }
 }
