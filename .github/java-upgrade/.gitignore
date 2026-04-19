@@ -1,4 +1,0 @@
-target/
-*.class
-.Ds_Store
-src/main/resources/application.properties
