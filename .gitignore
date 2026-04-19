@@ -1,4 +1,4 @@
 target/
 *.class
 .DS_Store
-src/main/resources/db.properties
+yakiniku-app/src/main/resources/db.properties
